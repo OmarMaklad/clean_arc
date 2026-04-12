@@ -1,7 +1,8 @@
-import 'package:clean_arc/core/error/exception.dart';
-import 'package:clean_arc/core/error/failure.dart';
+
+import 'package:clean_arc/core/errors/exceptions.dart';
+import 'package:clean_arc/core/errors/failures.dart';
+import 'package:clean_arc/core/network/network_checker.dart';
 import 'package:dartz/dartz.dart';
-import '../../../../core/network/chech_internet_conection.dart';
 import '../../domin/entities/post.dart';
 import '../../domin/repository/posts_repository.dart';
 import '../data_source/post_local_data_source.dart';
@@ -13,13 +14,13 @@ import '../models/post_model.dart';
 class PostsRepositoryImp implements PostsRepository{
   final PostRemoteDataSource remoteDataSource;
   final PostLocalDataSource postLocalDataSource;
-  final NetworkInfo networkInfo;
+  final NetWorkInfo networkInfo;
 
   PostsRepositoryImp(this.remoteDataSource, this.postLocalDataSource, this.networkInfo);
 
   @override
   Future<Either<Failure, List<Post>>> getAllPosts() async {
-    if(await networkInfo.isConnected){
+    if(await networkInfo.isDeviceConnected){
       try{
         final remotePost = await remoteDataSource.getAllPost();
         postLocalDataSource.cachedPost(remotePost);
@@ -32,8 +33,8 @@ class PostsRepositoryImp implements PostsRepository{
       try{
         final localPost = await postLocalDataSource.getCachedPost();
         return Right(localPost);
-      }on EmptyCashException{
-        return Left(EmptyCashFailure());
+      }on ExceptionEmptyCache{
+        return Left(FailureEmptyCache());
       }
     }
   }
@@ -65,7 +66,7 @@ class PostsRepositoryImp implements PostsRepository{
   }
 
   Future<Either<Failure, Unit>> _getMessage(DeleteOrUpdateOrAddPost addOrUpdateOrDelete)async{
-    if(await networkInfo.isConnected){
+    if(await networkInfo.isDeviceConnected){
       try{
         await addOrUpdateOrDelete();
         return const Right(unit);
@@ -73,7 +74,7 @@ class PostsRepositoryImp implements PostsRepository{
         return Left(ServerFailure());
       }
     }else{
-      return Left(OfflineFailure());
+      return Left(FailureOffline());
     }
   }
 

@@ -14,15 +14,21 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  flutter_bloc:
-  dartz:
-  equatable:
-  get_it:
-  dio:
-  internet_connection_checker:
-  shared_preferences:
-  dropdownfield2: ^1.0.7
-  popover: ^0.2.6+3
+
+ ##ui_packages
+  modal_progress_hud_nsn: ^0.5.1
+  easy_localization: ^3.0.8
+  responsive_framework: ^1.5.1
+  flutter_bloc: ^9.1.1
+  dartz: ^0.10.1
+  equatable: ^2.0.8
+  flutter_secure_storage: ^10.0.0
+  omni_image: ^0.0.5
+
+ ##network_packages
+  get_it: ^9.2.1
+  dio: ^5.9.2
+  internet_connection_checker: ^3.0.1
 
 
 dev_dependencies:

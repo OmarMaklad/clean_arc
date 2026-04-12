@@ -1,7 +1,6 @@
 
+import 'package:clean_arc/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/error/failure.dart';
 import '../entities/post.dart';
 import '../repository/posts_repository.dart';
 

@@ -1,5 +1,5 @@
 
-import '../../../../core/error/failure.dart';
+import 'package:clean_arc/core/errors/failures.dart';
 import '../entities/post.dart';
 import 'package:dartz/dartz.dart';
 
